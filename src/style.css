@@ -3,11 +3,29 @@
   --light-shade: #efefeb;
   --light-accent: #9c9a96;
   --dark-accent: #8b7434;
-  --dark-shade: #445248: 
+  --dark-shade: #445248;
   --darkest-shade: #2e312f;
+}
 
+h1 {
+  color: var(--light-shade);
+  font-size: 3vw;
 }
 
 body {
-  background-color: #445248;
+  background-color: var(--dark-shade);
+}
+
+.card {
+  background-color: var(--darkest-shade);
+  color: var(--light-shade);
+}
+
+.domains {
+  background-color: var(--light-accent);
+}
+
+.three-column-list {
+  column-count: 3;
+  padding-left: 0;
 }

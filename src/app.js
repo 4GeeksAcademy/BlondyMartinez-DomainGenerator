@@ -1,7 +1,7 @@
 const PRONOUNS = ["the", "our"];
 const ADJS = ["big", "great"];
 const NOUNS = ["jogger", "racoon"];
-const EXTENSIONS = [".com", ".es", ".dev"];
+const EXTENSIONS = [".com", ".es"];
 
 const WORD_CATEGORIES = [PRONOUNS, ADJS, NOUNS, EXTENSIONS];
 
@@ -23,4 +23,14 @@ function allCombos(categories = WORD_CATEGORIES, index = 0) {
   return result;
 }
 
-console.log(allCombos());
+function displayDomainList() {
+  let list = document.getElementById("domain-list");
+
+  allCombos().forEach(element => {
+    let li = document.createElement("li");
+    li.textContent = element;
+    list.appendChild(li);
+  });
+}
+
+displayDomainList();
