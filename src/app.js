@@ -1,11 +1,26 @@
-/* eslint-disable */
-import "bootstrap";
-import "./style.css";
+const PRONOUNS = ["the", "our"];
+const ADJS = ["big", "great"];
+const NOUNS = ["jogger", "racoon"];
+const EXTENSIONS = [".com", ".es", ".dev"];
 
-import "./assets/img/rigo-baby.jpg";
-import "./assets/img/4geeks.ico";
+const WORD_CATEGORIES = [PRONOUNS, ADJS, NOUNS, EXTENSIONS];
 
-window.onload = function() {
-  //write your code here
-  console.log("Hello Rigo from the console!");
-};
+function allCombos(categories = WORD_CATEGORIES, index = 0) {
+  // if there's only one array, returns it
+  if (index >= categories.length) return [[]];
+
+  const currentCategory = categories[index];
+  // recursion to handle subcombos, this way it can handle multiple categories
+  const subCombos = allCombos(categories, index + 1);
+  const result = [];
+
+  currentCategory.forEach(element => {
+    subCombos.forEach(subCombo => {
+      result.push([element, ...subCombo]);
+    });
+  });
+
+  return result;
+}
+
+console.log(allCombos());
