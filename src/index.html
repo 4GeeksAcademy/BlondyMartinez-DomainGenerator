@@ -31,14 +31,24 @@
           <div class="card mt-2">
             <div class="card-body">
               <h4 class="card-title text-center">PRONOUNS</h4>
-              <ul class="list-unstyled">
+              <ul class="list-unstyled" id="pronouns-list">
                 <li>the</li>
                 <li>our</li>
               </ul>
-              <!-- <div class="d-flex justify-content-between">
-                <button class="btn btn-success">Add</button>
-                <button class="btn btn-danger">Remove</button>
-              </div> -->
+              <div class="d-flex justify-content-between">
+                <button
+                  class="btn btn-success"
+                  onclick="addElement('pronouns-list', prompt(), 0)"
+                >
+                  Add
+                </button>
+                <button
+                  class="btn btn-danger"
+                  onclick="removeElement('pronouns-list', 0)"
+                >
+                  Remove
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -47,10 +57,24 @@
           <div class="card mt-2">
             <div class="card-body">
               <h4 class="card-title text-center">ADJECTIVES</h4>
-              <ul class="list-unstyled">
+              <ul class="list-unstyled" id="adj-list">
                 <li>great</li>
                 <li>big</li>
               </ul>
+              <div class="d-flex justify-content-between">
+                <button
+                  class="btn btn-success"
+                  onclick="addElement('adj-list', prompt(), 1)"
+                >
+                  Add
+                </button>
+                <button
+                  class="btn btn-danger"
+                  onclick="removeElement('adj-list', 1)"
+                >
+                  Remove
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -59,10 +83,24 @@
           <div class="card mt-2">
             <div class="card-body">
               <h4 class="card-title text-center">NOUNS</h4>
-              <ul class="list-unstyled">
+              <ul class="list-unstyled" id="nouns-list">
                 <li>jogger</li>
                 <li>racoon</li>
               </ul>
+              <div class="d-flex justify-content-between">
+                <button
+                  class="btn btn-success"
+                  onclick="addElement('nouns-list', prompt(), 2)"
+                >
+                  Add
+                </button>
+                <button
+                  class="btn btn-danger"
+                  onclick="removeElement('nouns-list', 2)"
+                >
+                  Remove
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -70,11 +108,27 @@
         <div class="col">
           <div class="card mt-2">
             <div class="card-body">
-              <h4 class="card-title text-center">EXTENSIONS</h4>
-              <ul class="list-unstyled">
+              <h4 class="card-title text-center">
+                EXTENSIONS
+              </h4>
+              <ul class="list-unstyled" id="extension-list">
                 <li>.com</li>
                 <li>.es</li>
               </ul>
+              <div class="d-flex justify-content-between">
+                <button
+                  class="btn btn-success"
+                  onclick="addElement('extension-list', prompt(), 3)"
+                >
+                  Add
+                </button>
+                <button
+                  class="btn btn-danger"
+                  onclick="removeElement('extension-list', 3)"
+                >
+                  Remove
+                </button>
+              </div>
             </div>
           </div>
         </div>

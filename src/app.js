@@ -24,13 +24,45 @@ function allCombos(categories = WORD_CATEGORIES, index = 0) {
 }
 
 function displayDomainList() {
-  let list = document.getElementById("domain-list");
+  const list = document.getElementById("domain-list");
+  clearChildren(list);
 
   allCombos().forEach(element => {
-    let li = document.createElement("li");
-    li.textContent = element;
-    list.appendChild(li);
+    addLI(list, element);
   });
+}
+
+function addElement(id, element, category) {
+  if (element) {
+    const list = document.getElementById(id);
+    addLI(list, element);
+
+    WORD_CATEGORIES[category].push(element);
+
+    displayDomainList();
+  }
+}
+
+function addLI(list, content) {
+  const li = document.createElement("li");
+  li.textContent = content;
+  list.appendChild(li);
+}
+
+function removeElement(id, category) {
+  if (WORD_CATEGORIES[category].length > 1) {
+    const list = document.getElementById(id);
+    list.removeChild(list.lastElementChild);
+
+    WORD_CATEGORIES[category].pop();
+    displayDomainList();
+  }
+}
+
+function clearChildren(element) {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
 }
 
 displayDomainList();
