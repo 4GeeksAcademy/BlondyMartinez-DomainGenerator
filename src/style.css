@@ -1,1 +1,13 @@
-@import "~bootstrap/dist/css/bootstrap.min.css";
+:root {
+  --main-shade: #a26f5d;
+  --light-shade: #efefeb;
+  --light-accent: #9c9a96;
+  --dark-accent: #8b7434;
+  --dark-shade: #445248: 
+  --darkest-shade: #2e312f;
+
+}
+
+body {
+  background-color: #445248;
+}
