@@ -9,7 +9,7 @@
 
 h1 {
   color: var(--light-shade);
-  font-size: 3vw;
+  font-size: 8vh;
 }
 
 body {
@@ -25,7 +25,14 @@ body {
   background-color: var(--light-accent);
 }
 
-.three-column-list {
+.column-list {
   column-count: 3;
   padding-left: 0;
+}
+
+@media (max-width: 768px) {
+  .column-list {
+    column-count: 2;
+    padding-left: 0;
+  }
 }
