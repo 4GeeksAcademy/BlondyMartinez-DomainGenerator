@@ -16,7 +16,7 @@ function allCombos(categories = WORD_CATEGORIES, index = 0) {
 
   currentCategory.forEach(element => {
     subCombos.forEach(subCombo => {
-      result.push([element, ...subCombo]);
+      result.push([element, ...subCombo].join(""));
     });
   });
 
