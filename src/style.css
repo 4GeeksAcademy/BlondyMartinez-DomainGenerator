@@ -7,6 +7,11 @@
   --darkest-shade: #2e312f;
 }
 
+.btn:focus {
+  outline: none;
+  border: none;
+}
+
 h1 {
   color: var(--light-shade);
   font-size: 8vh;
@@ -28,6 +33,10 @@ body {
 .column-list {
   column-count: 3;
   padding-left: 0;
+}
+
+#add-category {
+  background-color: #a26f5d;
 }
 
 @media (max-width: 768px) {
