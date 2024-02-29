@@ -5,6 +5,8 @@ const EXTENSIONS = [".com", ".es"];
 
 const WORD_CATEGORIES = [PRONOUNS, ADJS, NOUNS, EXTENSIONS];
 
+const EXTENSION_CARD = document.getElementById("extensions-card");
+
 function allCombos(categories = WORD_CATEGORIES, index = 0) {
   // if there's only one array, returns it
   if (index >= categories.length) return [[]];
@@ -34,7 +36,8 @@ function displayDomainList() {
 
 function addElement(id, element, category) {
   if (element) {
-    if (category == 3 && element[0] != ".") element = "." + element;
+    if (category == WORD_CATEGORIES.length - 1 && element[0] != ".")
+      element = "." + element;
 
     const list = document.getElementById(id);
     addLI(list, element);
@@ -65,6 +68,65 @@ function clearChildren(element) {
   while (element.firstChild) {
     element.removeChild(element.firstChild);
   }
+}
+
+function createCard(title, item) {
+  addCategory((title = [item]));
+
+  let cardDiv = document.createElement("div");
+  cardDiv.className = "col";
+
+  let card = document.createElement("div");
+  card.className = "card mt-2";
+
+  let cardBody = document.createElement("div");
+  cardBody.className = "card-body";
+
+  let cardTitle = document.createElement("h4");
+  cardTitle.className = "card-title text-center";
+  cardTitle.textContent = String(title).toUpperCase();
+
+  let itemList = document.createElement("ul");
+  itemList.className = "list-unstyled";
+  itemList.id = title;
+
+  addLI(itemList, item);
+
+  let addButton = document.createElement("button");
+  addButton.className = "btn text-white fs-3 p-0";
+  addButton.textContent = "+";
+  addButton.onclick = function() {
+    addElement(title, prompt(), title);
+  };
+
+  let removeButton = document.createElement("button");
+  removeButton.className = "btn text-white fs-3 p-0";
+  removeButton.textContent = "-";
+  removeButton.onclick = function() {
+    removeElement(title, title);
+  };
+
+  let buttonContainer = document.createElement("div");
+  buttonContainer.className = "d-flex justify-content-between";
+  buttonContainer.appendChild(addButton);
+  buttonContainer.appendChild(removeButton);
+
+  cardBody.appendChild(cardTitle);
+  cardBody.appendChild(itemList);
+  cardBody.appendChild(buttonContainer);
+
+  card.appendChild(cardBody);
+
+  cardDiv.appendChild(card);
+  const lastChild = document.getElementById("card-container").lastElementChild;
+
+  document.getElementById("card-container").insertBefore(cardDiv, lastChild);
+
+  displayDomainList();
+}
+
+function addCategory(category) {
+  WORD_CATEGORIES.splice(WORD_CATEGORIES.length - 1, 0, category);
 }
 
 displayDomainList();
