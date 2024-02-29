@@ -14,11 +14,11 @@ function allCombos(categories = WORD_CATEGORIES, index = 0) {
   const subCombos = allCombos(categories, index + 1);
   const result = [];
 
-  currentCategory.forEach(element => {
-    subCombos.forEach(subCombo => {
+  for (const element of currentCategory) {
+    for (const subCombo of subCombos) {
       result.push([element, ...subCombo].join(""));
-    });
-  });
+    }
+  }
 
   return result;
 }
@@ -34,6 +34,8 @@ function displayDomainList() {
 
 function addElement(id, element, category) {
   if (element) {
+    if (category == 3 && element[0] != ".") element = "." + element;
+
     const list = document.getElementById(id);
     addLI(list, element);
 
