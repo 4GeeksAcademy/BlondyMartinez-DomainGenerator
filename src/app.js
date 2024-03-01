@@ -78,6 +78,18 @@ function createCategory(title, item) {
   let card = document.createElement("div");
   card.className = "card mt-2";
 
+  let closeButtonContainer = document.createElement("div");
+  closeButtonContainer.className = "col-auto d-flex justify-content-end pe-3";
+
+  let closeButton = document.createElement("button");
+  closeButton.className = "btn text-white fs-5 p-0";
+  closeButton.textContent = "x";
+  closeButton.onclick = function() {
+    removeCategory(this.parentNode.parentNode.parentNode, title);
+  };
+
+  closeButtonContainer.appendChild(closeButton);
+
   let cardBody = document.createElement("div");
   cardBody.className = "card-body";
 
@@ -100,6 +112,7 @@ function createCategory(title, item) {
   cardBody.appendChild(itemList);
   cardBody.appendChild(buttonContainer);
 
+  card.appendChild(closeButtonContainer);
   card.appendChild(cardBody);
 
   cardDiv.appendChild(card);
@@ -168,6 +181,12 @@ function getPropertyIndex(key) {
       return i;
     }
   }
+}
+
+function removeCategory(tag, id) {
+  tag.remove();
+  delete word_categories[id.toUpperCase()];
+  displayDomainList();
 }
 
 displayDomainList();
