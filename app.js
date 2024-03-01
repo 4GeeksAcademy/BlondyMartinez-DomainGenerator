@@ -12,9 +12,11 @@ let amountCategories = 4;
 // Manipulation Functions
 
 function addLI(list, content) {
-  const li = document.createElement("li");
-  li.textContent = content;
-  list.appendChild(li);
+  if (list) {
+    const li = document.createElement("li");
+    li.textContent = content;
+    list.appendChild(li);
+  }
 }
 
 function clearChildren(element) {
@@ -200,7 +202,6 @@ function getPropertyIndex(key) {
   }
 }
 
-
-window.onload= function () {
-    displayDomainList(false);
-}
+document.addEventListener("DOMContentLoaded", function() {
+  displayDomainList(false);
+});
