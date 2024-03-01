@@ -179,9 +179,9 @@ function addPlaceholderButton(container) {
 
 // Initialization
 
-function displayDomainList() {
+function displayDomainList(children = true) {
   const list = document.getElementById("domain-list");
-  clearChildren(list);
+  if (children) clearChildren(list);
 
   allCombos().forEach(element => {
     addLI(list, element);
@@ -202,5 +202,5 @@ function getPropertyIndex(key) {
 
 
 window.onload= function () {
-    displayDomainList();
+    displayDomainList(false);
 }
