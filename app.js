@@ -157,7 +157,7 @@ function addButtons(id, buttonContainer) {
   addButton.className = "btn text-white fs-3 p-0";
   addButton.textContent = "+";
   addButton.onclick = function() {
-    addElement(id, prompt());
+    addElement(id, prompt('Type your word:'));
   };
 
   let removeButton = document.createElement("button");
