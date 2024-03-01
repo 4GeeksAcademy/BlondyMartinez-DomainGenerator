@@ -95,7 +95,6 @@ function createCategory(title, item) {
   buttonContainer.className = "d-flex justify-content-between";
   buttonContainer.id = title + "-btns";
   addButtons(title, buttonContainer);
-  updatePreviousPenultimateButtons(title);
 
   cardBody.appendChild(cardTitle);
   cardBody.appendChild(itemList);
@@ -133,15 +132,7 @@ function clearButtons(id) {
 }
 
 function addButtons(id, buttonContainer) {
-  let index = getPropertyIndex(id.toUpperCase());
-
-  if (index != 0) {
-    let leftArrowButton = document.createElement("button");
-    leftArrowButton.className = "btn text-white fs-3 p-0";
-    leftArrowButton.textContent = "←";
-
-    buttonContainer.appendChild(leftArrowButton);
-  } else addPlaceholderButton(buttonContainer);
+  addPlaceholderButton(buttonContainer);
 
   let addButton = document.createElement("button");
   addButton.className = "btn text-white fs-3 p-0";
@@ -160,13 +151,7 @@ function addButtons(id, buttonContainer) {
   buttonContainer.appendChild(addButton);
   buttonContainer.appendChild(removeButton);
 
-  if (index != amountCategories - 2) {
-    let rightArrowButton = document.createElement("button");
-    rightArrowButton.className = "btn text-white fs-3 p-0";
-    rightArrowButton.textContent = "→";
-
-    buttonContainer.appendChild(rightArrowButton);
-  } else addPlaceholderButton(buttonContainer);
+  addPlaceholderButton(buttonContainer);
 }
 
 function addPlaceholderButton(container) {
@@ -182,20 +167,6 @@ function getPropertyIndex(key) {
     if (keys[i] === key) {
       return i;
     }
-  }
-}
-
-function updateButtons(id) {
-  clearButtons(id);
-  addButtons(id);
-}
-
-function updatePreviousPenultimateButtons(id) {
-  let keys = Object.keys(word_categories);
-  let index = getPropertyIndex(id) - 1;
-  if (index >= 0) {
-    let newCategory = keys[index];
-    updateButtons(newCategory);
   }
 }
 
