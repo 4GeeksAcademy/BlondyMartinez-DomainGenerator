@@ -5,6 +5,8 @@ let word_categories = {
   EXTENSIONS: [".com", ".es"]
 };
 
+let amountCategories = 4;
+
 function allCombos(categories = word_categories, index = 0) {
   const categoryKeys = Object.keys(categories);
 
@@ -67,7 +69,7 @@ function clearChildren(element) {
   }
 }
 
-function createCard(title, item) {
+function createCategory(title, item) {
   addCategory(title.toUpperCase(), item);
 
   let cardDiv = document.createElement("div");
@@ -89,24 +91,11 @@ function createCard(title, item) {
 
   addLI(itemList, item);
 
-  let addButton = document.createElement("button");
-  addButton.className = "btn text-white fs-3 p-0";
-  addButton.textContent = "+";
-  addButton.onclick = function() {
-    addElement(title, prompt(), title);
-  };
-
-  let removeButton = document.createElement("button");
-  removeButton.className = "btn text-white fs-3 p-0";
-  removeButton.textContent = "-";
-  removeButton.onclick = function() {
-    removeElement(title, title);
-  };
-
   let buttonContainer = document.createElement("div");
   buttonContainer.className = "d-flex justify-content-between";
-  buttonContainer.appendChild(addButton);
-  buttonContainer.appendChild(removeButton);
+  buttonContainer.id = title + "-btns";
+  addButtons(title, buttonContainer);
+  updatePreviousPenultimateButtons(title);
 
   cardBody.appendChild(cardTitle);
   cardBody.appendChild(itemList);
@@ -135,6 +124,79 @@ function addCategory(category, item) {
   }
 
   word_categories = updatedCategories;
+  amountCategories++;
+}
+
+function clearButtons(id) {
+  let container = document.getElementById(id + "-btns");
+  clearChildren(container);
+}
+
+function addButtons(id, buttonContainer) {
+  let index = getPropertyIndex(id.toUpperCase());
+
+  if (index != 0) {
+    let leftArrowButton = document.createElement("button");
+    leftArrowButton.className = "btn text-white fs-3 p-0";
+    leftArrowButton.textContent = "←";
+
+    buttonContainer.appendChild(leftArrowButton);
+  } else addPlaceholderButton(buttonContainer);
+
+  let addButton = document.createElement("button");
+  addButton.className = "btn text-white fs-3 p-0";
+  addButton.textContent = "+";
+  addButton.onclick = function() {
+    addElement(id, prompt());
+  };
+
+  let removeButton = document.createElement("button");
+  removeButton.className = "btn text-white fs-3 p-0";
+  removeButton.textContent = "-";
+  removeButton.onclick = function() {
+    removeElement(id);
+  };
+
+  buttonContainer.appendChild(addButton);
+  buttonContainer.appendChild(removeButton);
+
+  if (index != amountCategories - 2) {
+    let rightArrowButton = document.createElement("button");
+    rightArrowButton.className = "btn text-white fs-3 p-0";
+    rightArrowButton.textContent = "→";
+
+    buttonContainer.appendChild(rightArrowButton);
+  } else addPlaceholderButton(buttonContainer);
+}
+
+function addPlaceholderButton(container) {
+  let placeholder = document.createElement("div");
+  placeholder.id = "placeholder-btn";
+  container.appendChild(placeholder);
+}
+
+function getPropertyIndex(key) {
+  const keys = Object.keys(word_categories);
+
+  for (let i = 0; i < keys.length; i++) {
+    if (keys[i] === key) {
+      return i;
+    }
+  }
+}
+
+function updateButtons(id) {
+  clearButtons(id);
+  addButtons(id);
+}
+
+function updatePreviousPenultimateButtons(id) {
+  let keys = Object.keys(word_categories);
+  let index = getPropertyIndex(id) - 1;
+  if (index >= 0) {
+    let newCategory = keys[index];
+    updateButtons(newCategory);
+  }
 }
 
 displayDomainList();
