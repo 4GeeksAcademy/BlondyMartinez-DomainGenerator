@@ -200,4 +200,7 @@ function getPropertyIndex(key) {
   }
 }
 
-displayDomainList();
+
+window.onload= function () {
+    displayDomainList();
+}
