@@ -1,3 +1,5 @@
+// Global variables
+
 let word_categories = {
   PRONOUNS: ["the", "our"],
   ADJECTIVES: ["big", "great"],
@@ -6,6 +8,22 @@ let word_categories = {
 };
 
 let amountCategories = 4;
+
+// Manipulation Functions
+
+function addLI(list, content) {
+  const li = document.createElement("li");
+  li.textContent = content;
+  list.appendChild(li);
+}
+
+function clearChildren(element) {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+}
+
+// Combination Function
 
 function allCombos(categories = word_categories, index = 0) {
   const categoryKeys = Object.keys(categories);
@@ -25,14 +43,7 @@ function allCombos(categories = word_categories, index = 0) {
   return result;
 }
 
-function displayDomainList() {
-  const list = document.getElementById("domain-list");
-  clearChildren(list);
-
-  allCombos().forEach(element => {
-    addLI(list, element);
-  });
-}
+// Event Handlers
 
 function addElement(id, element) {
   if (element) {
@@ -47,12 +58,6 @@ function addElement(id, element) {
   }
 }
 
-function addLI(list, content) {
-  const li = document.createElement("li");
-  li.textContent = content;
-  list.appendChild(li);
-}
-
 function removeElement(id) {
   if (word_categories[id.toUpperCase()].length > 1) {
     const list = document.getElementById(id);
@@ -63,11 +68,31 @@ function removeElement(id) {
   }
 }
 
-function clearChildren(element) {
-  while (element.firstChild) {
-    element.removeChild(element.firstChild);
+// Category Management Functions
+
+function addCategory(category, item) {
+  const keys = Object.keys(word_categories);
+  const lastKey = keys[keys.length - 1];
+
+  const updatedCategories = {};
+  for (const key of keys) {
+    if (key === lastKey) {
+      updatedCategories[category] = [String(item)];
+    }
+    updatedCategories[key] = word_categories[key];
   }
+
+  word_categories = updatedCategories;
+  amountCategories++;
 }
+
+function removeCategory(tag, id) {
+  tag.remove();
+  delete word_categories[id.toUpperCase()];
+  displayDomainList();
+}
+
+// UI Creation Functions
 
 function createCategory(title, item) {
   addCategory(title.toUpperCase(), item);
@@ -123,27 +148,6 @@ function createCategory(title, item) {
   displayDomainList();
 }
 
-function addCategory(category, item) {
-  const keys = Object.keys(word_categories);
-  const lastKey = keys[keys.length - 1];
-
-  const updatedCategories = {};
-  for (const key of keys) {
-    if (key === lastKey) {
-      updatedCategories[category] = [String(item)];
-    }
-    updatedCategories[key] = word_categories[key];
-  }
-
-  word_categories = updatedCategories;
-  amountCategories++;
-}
-
-function clearButtons(id) {
-  let container = document.getElementById(id + "-btns");
-  clearChildren(container);
-}
-
 function addButtons(id, buttonContainer) {
   addPlaceholderButton(buttonContainer);
 
@@ -173,6 +177,19 @@ function addPlaceholderButton(container) {
   container.appendChild(placeholder);
 }
 
+// Initialization
+
+function displayDomainList() {
+  const list = document.getElementById("domain-list");
+  clearChildren(list);
+
+  allCombos().forEach(element => {
+    addLI(list, element);
+  });
+}
+
+// Helper Functions
+
 function getPropertyIndex(key) {
   const keys = Object.keys(word_categories);
 
@@ -181,12 +198,6 @@ function getPropertyIndex(key) {
       return i;
     }
   }
-}
-
-function removeCategory(tag, id) {
-  tag.remove();
-  delete word_categories[id.toUpperCase()];
-  displayDomainList();
 }
 
 displayDomainList();
