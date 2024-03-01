@@ -1,18 +1,16 @@
-const PRONOUNS = ["the", "our"];
-const ADJS = ["big", "great"];
-const NOUNS = ["jogger", "racoon"];
-const EXTENSIONS = [".com", ".es"];
+let word_categories = {
+  PRONOUNS: ["the", "our"],
+  ADJECTIVES: ["big", "great"],
+  NOUNS: ["jogger", "racoon"],
+  EXTENSIONS: [".com", ".es"]
+};
 
-const WORD_CATEGORIES = [PRONOUNS, ADJS, NOUNS, EXTENSIONS];
+function allCombos(categories = word_categories, index = 0) {
+  const categoryKeys = Object.keys(categories);
 
-const EXTENSION_CARD = document.getElementById("extensions-card");
+  if (index >= categoryKeys.length) return [[]];
 
-function allCombos(categories = WORD_CATEGORIES, index = 0) {
-  // if there's only one array, returns it
-  if (index >= categories.length) return [[]];
-
-  const currentCategory = categories[index];
-  // recursion to handle subcombos, this way it can handle multiple categories
+  const currentCategory = categories[categoryKeys[index]];
   const subCombos = allCombos(categories, index + 1);
   const result = [];
 
@@ -34,15 +32,14 @@ function displayDomainList() {
   });
 }
 
-function addElement(id, element, category) {
+function addElement(id, element) {
   if (element) {
-    if (category == WORD_CATEGORIES.length - 1 && element[0] != ".")
-      element = "." + element;
+    if (id === "extensions" && element[0] != ".") element = "." + element;
 
     const list = document.getElementById(id);
     addLI(list, element);
 
-    WORD_CATEGORIES[category].push(element);
+    word_categories[id.toUpperCase()].push(element);
 
     displayDomainList();
   }
@@ -54,12 +51,12 @@ function addLI(list, content) {
   list.appendChild(li);
 }
 
-function removeElement(id, category) {
-  if (WORD_CATEGORIES[category].length > 1) {
+function removeElement(id) {
+  if (word_categories[id.toUpperCase()].length > 1) {
     const list = document.getElementById(id);
     list.removeChild(list.lastElementChild);
 
-    WORD_CATEGORIES[category].pop();
+    word_categories[id.toUpperCase()].pop();
     displayDomainList();
   }
 }
@@ -71,7 +68,7 @@ function clearChildren(element) {
 }
 
 function createCard(title, item) {
-  addCategory((title = [item]));
+  addCategory(title.toUpperCase(), item);
 
   let cardDiv = document.createElement("div");
   cardDiv.className = "col";
@@ -125,8 +122,19 @@ function createCard(title, item) {
   displayDomainList();
 }
 
-function addCategory(category) {
-  WORD_CATEGORIES.splice(WORD_CATEGORIES.length - 1, 0, category);
+function addCategory(category, item) {
+  const keys = Object.keys(word_categories);
+  const lastKey = keys[keys.length - 1];
+
+  const updatedCategories = {};
+  for (const key of keys) {
+    if (key === lastKey) {
+      updatedCategories[category] = [String(item)];
+    }
+    updatedCategories[key] = word_categories[key];
+  }
+
+  word_categories = updatedCategories;
 }
 
 displayDomainList();
