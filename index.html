@@ -38,10 +38,12 @@
       <div
         class="row row-cols-1 row-cols-md-2 row-cols-lg-4 mt-3"
         id="card-container"
+        ondragover="handleDragOver(event)"
+        ondrop="handleDrop(event)"
       >
         <!-- PRONOUNS -->
-        <div class="col">
-          <div class="card mt-2">
+        <div class="col" draggable="true" ondragstart="handleDragStart(event)" data-card="pronouns-card">
+          <div class="card mt-2 draggable">
             <div class="col-auto d-flex justify-content-end pe-3">
               <button
                 class="btn text-white fs-5 p-0"
@@ -76,8 +78,8 @@
           </div>
         </div>
         <!-- ADJECTIVES -->
-        <div class="col">
-          <div class="card mt-2">
+        <div class="col draggable="true" ondragstart="handleDragStart(event)" data-card="adjectives-card">
+          <div class="card mt-2 draggable">
             <div class="col-auto d-flex justify-content-end pe-3">
               <button
                 class="btn text-white fs-5 p-0"
@@ -112,8 +114,8 @@
           </div>
         </div>
         <!-- NOUNS -->
-        <div class="col">
-          <div class="card mt-2">
+        <div class="col" draggable="true" ondragstart="handleDragStart(event)" data-card="nouns-card">
+          <div class="card mt-2 draggable">
             <div class="col-auto d-flex justify-content-end pe-3">
               <button
                 class="btn text-white fs-5 p-0"

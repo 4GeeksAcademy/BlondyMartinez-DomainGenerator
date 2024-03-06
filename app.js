@@ -190,6 +190,51 @@ function displayDomainList(children = true) {
   });
 }
 
+// Drag & drop
+
+function handleDragStart(event) {
+  event.dataTransfer.setData("text/plain", event.target.dataset.card);
+}
+
+function handleDragOver(event) {
+  event.preventDefault();
+}
+
+function handleDrop(event) {
+  event.preventDefault();
+  const data = event.dataTransfer.getData("text/plain");
+  const draggedElement = document.querySelector(`[data-card='${data}']`);
+  const dropTarget = event.target.closest(".col");
+
+  if (dropTarget && draggedElement && draggedElement.parentElement !== dropTarget) {
+    const container = dropTarget.parentElement;
+    container.insertBefore(draggedElement, dropTarget.nextSibling);
+
+    const categoryNames = Array.from(container.children)
+      .map(child => child.dataset.card)
+      .filter(card => card) 
+      .map(card => card.split('-')[0].toUpperCase())
+      .filter(category => category !== 'EXTENSIONS'); 
+
+    categoryNames.push('EXTENSIONS');
+
+    updateWordCategories(categoryNames);
+
+    displayDomainList();
+  }
+}
+
+function updateWordCategories(categoryNames) {
+  const updatedCategories = {};
+
+  categoryNames.forEach(categoryName => {
+    const category = word_categories[categoryName.toUpperCase()];
+    updatedCategories[categoryName.toUpperCase()] = category;
+  });
+  
+  word_categories = updatedCategories;
+}
+
 // Helper Functions
 
 function getPropertyIndex(key) {
