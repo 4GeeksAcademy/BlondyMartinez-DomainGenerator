@@ -101,9 +101,13 @@ function createCategory(title, item) {
 
   let cardDiv = document.createElement("div");
   cardDiv.className = "col";
+  cardDiv.setAttribute('draggable', 'true');
+  cardDiv.setAttribute('ondragstart', 'handleDragStart(event)');
+  cardDiv.setAttribute('data-card', title.toLowerCase() + '-card');
+
 
   let card = document.createElement("div");
-  card.className = "card mt-2";
+  card.className = "card mt-2 draggable";
 
   let closeButtonContainer = document.createElement("div");
   closeButtonContainer.className = "col-auto d-flex justify-content-end pe-3";
