@@ -17,8 +17,8 @@
       defer
     ></script>
 
-    <link rel="stylesheet" href="src/style.css" />
-    <script src="src/app.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <script src="app.js"></script>
 
     <title>Domain Generator</title>
   </head>
@@ -38,10 +38,12 @@
       <div
         class="row row-cols-1 row-cols-md-2 row-cols-lg-4 mt-3"
         id="card-container"
+        ondragover="handleDragOver(event)"
+        ondrop="handleDrop(event)"
       >
         <!-- PRONOUNS -->
-        <div class="col">
-          <div class="card mt-2">
+        <div class="col" draggable="true" ondragstart="handleDragStart(event)" data-card="pronouns-card">
+          <div class="card mt-2 draggable">
             <div class="col-auto d-flex justify-content-end pe-3">
               <button
                 class="btn text-white fs-5 p-0"
@@ -60,7 +62,7 @@
                 <div id="btn-placeholder"></div>
                 <button
                   class="btn text-white fs-3 p-0 col-auto"
-                  onclick="addElement('pronouns', prompt())"
+                  onclick="addElement('pronouns', prompt('Type your word:'))"
                 >
                   +
                 </button>
@@ -76,8 +78,8 @@
           </div>
         </div>
         <!-- ADJECTIVES -->
-        <div class="col">
-          <div class="card mt-2">
+        <div class="col draggable="true" ondragstart="handleDragStart(event)" data-card="adjectives-card">
+          <div class="card mt-2 draggable">
             <div class="col-auto d-flex justify-content-end pe-3">
               <button
                 class="btn text-white fs-5 p-0"
@@ -96,7 +98,7 @@
                 <div id="btn-placeholder"></div>
                 <button
                   class="btn text-white fs-3 p-0"
-                  onclick="addElement('adjectives', prompt())"
+                  onclick="addElement('adjectives', prompt('Type your word:'))"
                 >
                   +
                 </button>
@@ -112,8 +114,8 @@
           </div>
         </div>
         <!-- NOUNS -->
-        <div class="col">
-          <div class="card mt-2">
+        <div class="col" draggable="true" ondragstart="handleDragStart(event)" data-card="nouns-card">
+          <div class="card mt-2 draggable">
             <div class="col-auto d-flex justify-content-end pe-3">
               <button
                 class="btn text-white fs-5 p-0"
@@ -132,7 +134,7 @@
                 <div id="btn-placeholder"></div>
                 <button
                   class="btn text-white fs-3 p-0"
-                  onclick="addElement('nouns', prompt())"
+                  onclick="addElement('nouns', prompt('Type your word:'))"
                 >
                   +
                 </button>
@@ -162,7 +164,7 @@
                 <div id="btn-placeholder"></div>
                 <button
                   class="btn text-white fs-3 p-0"
-                  onclick="addElement('extensions', prompt())"
+                  onclick="addElement('extensions', prompt('Type your word:'))"
                 >
                   +
                 </button>

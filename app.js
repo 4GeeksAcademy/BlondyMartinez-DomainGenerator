@@ -12,9 +12,11 @@ let amountCategories = 4;
 // Manipulation Functions
 
 function addLI(list, content) {
-  const li = document.createElement("li");
-  li.textContent = content;
-  list.appendChild(li);
+  if (list) {
+    const li = document.createElement("li");
+    li.textContent = content;
+    list.appendChild(li);
+  }
 }
 
 function clearChildren(element) {
@@ -99,9 +101,13 @@ function createCategory(title, item) {
 
   let cardDiv = document.createElement("div");
   cardDiv.className = "col";
+  cardDiv.setAttribute('draggable', 'true');
+  cardDiv.setAttribute('ondragstart', 'handleDragStart(event)');
+  cardDiv.setAttribute('data-card', title.toLowerCase() + '-card');
+
 
   let card = document.createElement("div");
-  card.className = "card mt-2";
+  card.className = "card mt-2 draggable";
 
   let closeButtonContainer = document.createElement("div");
   closeButtonContainer.className = "col-auto d-flex justify-content-end pe-3";
@@ -155,7 +161,7 @@ function addButtons(id, buttonContainer) {
   addButton.className = "btn text-white fs-3 p-0";
   addButton.textContent = "+";
   addButton.onclick = function() {
-    addElement(id, prompt());
+    addElement(id, prompt('Type your word:'));
   };
 
   let removeButton = document.createElement("button");
@@ -179,13 +185,58 @@ function addPlaceholderButton(container) {
 
 // Initialization
 
-function displayDomainList() {
+function displayDomainList(children = true) {
   const list = document.getElementById("domain-list");
-  clearChildren(list);
+  if (children) clearChildren(list);
 
   allCombos().forEach(element => {
     addLI(list, element);
   });
+}
+
+// Drag & drop
+
+function handleDragStart(event) {
+  event.dataTransfer.setData("text/plain", event.target.dataset.card);
+}
+
+function handleDragOver(event) {
+  event.preventDefault();
+}
+
+function handleDrop(event) {
+  event.preventDefault();
+  const data = event.dataTransfer.getData("text/plain");
+  const draggedElement = document.querySelector(`[data-card='${data}']`);
+  const dropTarget = event.target.closest(".col");
+
+  if (dropTarget && draggedElement && draggedElement.parentElement !== dropTarget) {
+    const container = dropTarget.parentElement;
+    container.insertBefore(draggedElement, dropTarget.nextSibling);
+
+    const categoryNames = Array.from(container.children)
+      .map(child => child.dataset.card)
+      .filter(card => card) 
+      .map(card => card.split('-')[0].toUpperCase())
+      .filter(category => category !== 'EXTENSIONS'); 
+
+    categoryNames.push('EXTENSIONS');
+
+    updateWordCategories(categoryNames);
+
+    displayDomainList();
+  }
+}
+
+function updateWordCategories(categoryNames) {
+  const updatedCategories = {};
+
+  categoryNames.forEach(categoryName => {
+    const category = word_categories[categoryName.toUpperCase()];
+    updatedCategories[categoryName.toUpperCase()] = category;
+  });
+  
+  word_categories = updatedCategories;
 }
 
 // Helper Functions
@@ -200,4 +251,6 @@ function getPropertyIndex(key) {
   }
 }
 
-displayDomainList();
+document.addEventListener("DOMContentLoaded", function() {
+  displayDomainList(false);
+});
